@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { Livro } from 'src/app/componentes/livro/livro';
+import { Livro } from '../../components/livro/livro';
 
 @Component({
   selector: 'app-lista-livros',

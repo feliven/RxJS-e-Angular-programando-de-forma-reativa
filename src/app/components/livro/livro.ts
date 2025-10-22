@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { ModalLivro } from 'src/app/views/modal-livro/modal-livro';
+import { ModalLivro } from '../../views/modal-livro/modal-livro';
 
 @Component({
   selector: 'app-livro',
