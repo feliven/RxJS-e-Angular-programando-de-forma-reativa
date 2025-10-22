@@ -10,17 +10,6 @@ import { AppRoutingModule } from './app/app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
-bootstrapApplication(App, {
-  providers: [
-    importProvidersFrom(
-      AppRoutingModule,
-      FormsModule,
-      ReactiveFormsModule,
-      HttpClientModule
-    ),
-  ],
-});
-
 if (environment.production) {
   enableProdMode();
 }
