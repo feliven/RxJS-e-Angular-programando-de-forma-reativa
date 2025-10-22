@@ -1,21 +1,21 @@
-import { ListaLivrosComponent } from './views/lista-livros/lista-livros.component';
+import { ListaLivros } from './views/lista-livros/lista-livros';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: "",
+    path: '',
     redirectTo: 'lista-livros',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'lista-livros',
-    component: ListaLivrosComponent
-  }
+    component: ListaLivros,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
