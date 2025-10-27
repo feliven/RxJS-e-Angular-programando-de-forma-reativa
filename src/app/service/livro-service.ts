@@ -17,9 +17,9 @@ export class LivroService {
   search(searchTerm: string): Observable<GoogleBookVolume[]> {
     const params: HttpParams = new HttpParams().append('q', searchTerm);
     return this.http.get<ResultadoBusca>(this.enderecoAPI, { params }).pipe(
-      tap((retornoDaAPI) => console.log(retornoDaAPI)),
-      map((resultado) => resultado.items),
-      tap((resultado) => console.log(resultado))
+      // tap((retornoDaAPI) => console.log(retornoDaAPI)),
+      map((resultado) => resultado.items)
+      // tap((resultado) => console.log(resultado))
     );
   }
 }
