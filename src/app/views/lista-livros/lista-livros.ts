@@ -7,7 +7,7 @@ import { Livro } from '../../components/livro/livro';
 import { InterfaceLivro } from '../../models/interfaces';
 import { LivroService } from '../../service/livro-service';
 import { GoogleBookVolume } from '../../models/interfaces';
-import { InterfaceConvertidaParaLivro } from 'src/app/models/converter-para-interface-livro';
+import { InterfaceConvertidaParaLivro } from '../../models/converter-para-interface-livro';
 
 @Component({
   selector: 'app-lista-livros',
@@ -26,7 +26,8 @@ export class ListaLivros implements OnDestroy {
   buscarLivros() {
     this.assinatura = this.livroService.search(this.campoBusca).subscribe({
       next: (resultadoDaAPI) =>
-        this.converterResultadoParaInterfaceLivro(resultadoDaAPI),
+        (this.listaLivros =
+          this.converterResultadoParaInterfaceLivro(resultadoDaAPI)),
       error: (erro) => console.log(erro),
       complete: () => console.log('Observable completo'),
     });

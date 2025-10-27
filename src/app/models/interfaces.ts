@@ -51,7 +51,7 @@ interface PanelizationSummary {
   containsImageBubbles: boolean;
 }
 
-interface BookImageLinks {
+export interface BookImageLinks {
   smallThumbnail?: string;
   thumbnail?: string;
   small?: string;

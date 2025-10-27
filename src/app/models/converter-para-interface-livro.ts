@@ -2,12 +2,12 @@ import { GoogleBookVolume } from './interfaces';
 
 export class InterfaceConvertidaParaLivro {
   title: string;
-  authors: string[];
-  publisher: string;
-  publishedDate: Date;
-  description: string;
-  previewLink: string;
-  thumbnail: string;
+  authors?: string[];
+  publisher?: string;
+  publishedDate?: Date;
+  description?: string;
+  previewLink?: string;
+  thumbnail?: string;
 
   constructor(volume: GoogleBookVolume) {
     (this.title = volume.volumeInfo?.title),
