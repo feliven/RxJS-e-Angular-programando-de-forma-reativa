@@ -21,7 +21,7 @@ export class ListaLivros implements OnDestroy {
 
   buscarLivros() {
     this.assinatura = this.livroService.search(this.campoBusca).subscribe({
-      next: (retornoDaAPI) => console.log(retornoDaAPI),
+      // next: (retornoDaAPI) => console.log(retornoDaAPI),
       error: (erro) => console.log(erro),
       complete: () => console.log('Observable completo'),
     });
