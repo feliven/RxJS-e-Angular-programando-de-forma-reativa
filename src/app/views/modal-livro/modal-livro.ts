@@ -1,5 +1,8 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+import { InterfaceConvertidaParaLivro } from '../../models/converter-para-interface-livro';
+import { AutoriaPipe } from '../../pipes/autoria-pipe';
 
 const body = document.querySelector('body');
 
@@ -7,12 +10,12 @@ const body = document.querySelector('body');
   selector: 'app-modal-livro',
   templateUrl: './modal-livro.html',
   styleUrls: ['./modal-livro.css'],
-  imports: [CommonModule],
+  imports: [CommonModule, NgIf, AutoriaPipe],
 })
 export class ModalLivro {
   constructor() {}
 
-  @Input() livro: Object;
+  @Input() livro: InterfaceConvertidaParaLivro;
   statusModal: boolean = true;
   @Output() mudouModal = new EventEmitter();
 
@@ -29,6 +32,6 @@ export class ModalLivro {
   }
 
   lerPrevia() {
-    window.open('_blank');
+    window.open(this.livro.previewLink, '_blank');
   }
 }
