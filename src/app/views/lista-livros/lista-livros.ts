@@ -7,6 +7,7 @@ import { Livro } from '../../components/livro/livro';
 import { InterfaceLivro } from '../../models/interfaces';
 import { LivroService } from '../../service/livro-service';
 import { GoogleBookVolume } from '../../models/interfaces';
+import { InterfaceConvertidaParaLivro } from 'src/app/models/converter-para-interface-livro';
 
 @Component({
   selector: 'app-lista-livros',
@@ -15,7 +16,7 @@ import { GoogleBookVolume } from '../../models/interfaces';
   imports: [CommonModule, FormsModule, Livro],
 })
 export class ListaLivros implements OnDestroy {
-  listaLivros: InterfaceLivro[] = [];
+  listaLivros: InterfaceConvertidaParaLivro[] = [];
   campoBusca: string = '';
   assinatura: Subscription;
   livro: InterfaceLivro;
@@ -33,24 +34,10 @@ export class ListaLivros implements OnDestroy {
 
   converterResultadoParaInterfaceLivro(
     googleBookVolumes: GoogleBookVolume[]
-  ): InterfaceLivro[] {
-    googleBookVolumes.forEach((volume) => {
-      this.listaLivros.push(
-        (this.livro = {
-          title: volume.volumeInfo?.title,
-          authors: volume.volumeInfo?.authors,
-          publisher: volume.volumeInfo?.publisher,
-          publishedDate: new Date(
-            volume.volumeInfo?.publishedDate + 'T00:00:00'
-          ),
-          description: volume.volumeInfo?.description,
-          previewLink: volume.volumeInfo?.previewLink,
-          thumbnail: volume.volumeInfo?.imageLinks.thumbnail,
-        })
-      );
+  ): InterfaceConvertidaParaLivro[] {
+    return googleBookVolumes.map((volume) => {
+      return new InterfaceConvertidaParaLivro(volume);
     });
-
-    return this.listaLivros;
   }
 
   ngOnDestroy() {
