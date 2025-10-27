@@ -24,24 +24,31 @@ export class ListaLivros implements OnDestroy {
 
   buscarLivros() {
     this.assinatura = this.livroService.search(this.campoBusca).subscribe({
-      // next: (retornoDaAPI) => console.log(retornoDaAPI),
+      next: (resultadoDaAPI) =>
+        this.converterResultadoParaInterfaceLivro(resultadoDaAPI),
       error: (erro) => console.log(erro),
       complete: () => console.log('Observable completo'),
     });
   }
 
-  converterResultadoParaInterfaceLivro(googleBookVolumes: GoogleBookVolume[]) {
+  converterResultadoParaInterfaceLivro(
+    googleBookVolumes: GoogleBookVolume[]
+  ): InterfaceLivro[] {
     googleBookVolumes.forEach((volume) => {
-      this.livro = {
-        title: volume.volumeInfo?.title,
-        authors: volume.volumeInfo?.authors,
-        publisher: volume.volumeInfo?.publisher,
-        publishedDate: new Date(volume.volumeInfo?.publishedDate),
-        description: volume.volumeInfo?.description,
-        previewLink: volume.volumeInfo?.previewLink,
-        thumbnail: volume.volumeInfo?.imageLinks.thumbnail,
-      };
+      this.listaLivros.push(
+        (this.livro = {
+          title: volume.volumeInfo?.title,
+          authors: volume.volumeInfo?.authors,
+          publisher: volume.volumeInfo?.publisher,
+          publishedDate: new Date(volume.volumeInfo?.publishedDate),
+          description: volume.volumeInfo?.description,
+          previewLink: volume.volumeInfo?.previewLink,
+          thumbnail: volume.volumeInfo?.imageLinks.thumbnail,
+        })
+      );
     });
+
+    return this.listaLivros;
   }
 
   ngOnDestroy() {
