@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+
 import { ModalLivro } from '../../views/modal-livro/modal-livro';
+import { InterfaceLivro } from '../../models/interfaces';
 
 @Component({
   selector: 'app-livro',
@@ -9,7 +11,7 @@ import { ModalLivro } from '../../views/modal-livro/modal-livro';
   imports: [ModalLivro, CommonModule],
 })
 export class Livro {
-  @Input() livro: Object;
+  @Input() livro: InterfaceLivro;
   modalAberto: boolean;
 
   onModalChange(evento: boolean) {

@@ -1,16 +1,19 @@
 <div class="card">
   <img
-    src="{{ livro != undefined ? livro : 'imagens/capa-indisponivel.png'}}"
+    src="{{ livro.thumbnail != undefined ? livro.thumbnail : 'imagens/capa-indisponivel.png'}}"
     alt="Capa do livro"
   />
   <div class="info-card">
-    <p class="titulo">{{ livro }}</p>
+    <p class="titulo">{{ livro.title }}</p>
     <p class="informacoes">Autoria:</p>
-    <p class="resultado">{{ livro }}</p>
+    <p class="resultado">{{ livro.authors }}</p>
     <p class="informacoes">Data de publicação:</p>
-    <p class="resultado">{{ livro }}</p>
+    <p class="resultado">
+      {{ livro.publishedDate.toLocaleDateString("br",{ year:"numeric",
+      month:"2-digit", day: "2-digit"}) }}
+    </p>
     <p class="informacoes">Editora:</p>
-    <p class="resultado">{{ livro }}</p>
+    <p class="resultado">{{ livro.publisher }}</p>
     <button (click)="onModalChange(true)">Mais detalhes</button>
   </div>
 </div>

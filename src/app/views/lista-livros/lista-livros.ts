@@ -40,7 +40,9 @@ export class ListaLivros implements OnDestroy {
           title: volume.volumeInfo?.title,
           authors: volume.volumeInfo?.authors,
           publisher: volume.volumeInfo?.publisher,
-          publishedDate: new Date(volume.volumeInfo?.publishedDate),
+          publishedDate: new Date(
+            volume.volumeInfo?.publishedDate + 'T00:00:00'
+          ),
           description: volume.volumeInfo?.description,
           previewLink: volume.volumeInfo?.previewLink,
           thumbnail: volume.volumeInfo?.imageLinks.thumbnail,
