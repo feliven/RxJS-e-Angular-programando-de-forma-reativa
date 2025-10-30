@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { map, Subscription, switchMap } from 'rxjs';
+import { map, Subscription, switchMap, tap } from 'rxjs';
 
 import { Livro } from '../../components/livro/livro';
 import { InterfaceLivro } from '../../models/interfaces';
@@ -15,20 +15,20 @@ import { InterfaceConvertidaParaLivro } from '../../models/converter-para-interf
   styleUrls: ['./lista-livros.css'],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, Livro],
 })
-export class ListaLivros implements OnDestroy {
-  listaLivros: InterfaceConvertidaParaLivro[] = [];
+export class ListaLivros {
+  // listaLivros: InterfaceConvertidaParaLivro[] = [];
   @Input() campoBusca = new FormControl();
   assinatura: Subscription;
-  livro: InterfaceLivro;
+  // livro: InterfaceLivro;
 
   constructor(private livroService: LivroService) {}
 
   livrosEncontrados$ = this.campoBusca.valueChanges.pipe(
+    tap(() => console.log('Fluxo inicial')),
     switchMap((valorDigitado) => this.livroService.search(valorDigitado)),
-    map(
-      (resultadoDaAPI) =>
-        (this.listaLivros =
-          this.converterResultadoParaInterfaceLivro(resultadoDaAPI))
+    tap(() => console.log('Requisição ao servidor')),
+    map((resultadoDaAPI) =>
+      this.converterResultadoParaInterfaceLivro(resultadoDaAPI)
     )
   );
   //
@@ -53,7 +53,7 @@ export class ListaLivros implements OnDestroy {
     });
   }
 
-  ngOnDestroy() {
-    this.assinatura.unsubscribe();
-  }
+  // ngOnDestroy() {
+  //   this.assinatura.unsubscribe();
+  // }
 }
