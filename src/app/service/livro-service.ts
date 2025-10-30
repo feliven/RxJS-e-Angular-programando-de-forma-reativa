@@ -8,7 +8,7 @@ import { ResultadoBusca, GoogleBookVolume } from '../models/interfaces';
 })
 export class LivroService {
   private readonly enderecoAPI: string =
-    'https://www.googleapis.com/books/v1/volumes';
+    'https://www.googleapis.com/books/v1/volume';
 
   // https://www.googleapis.com/books/v1/volumes?q=search+terms
 

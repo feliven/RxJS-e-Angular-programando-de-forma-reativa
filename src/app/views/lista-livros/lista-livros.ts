@@ -1,7 +1,16 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { debounceTime, filter, map, Subscription, switchMap, tap } from 'rxjs';
+import {
+  catchError,
+  debounceTime,
+  filter,
+  map,
+  Subscription,
+  switchMap,
+  tap,
+  throwError,
+} from 'rxjs';
 
 import { Livro } from '../../components/livro/livro';
 import { InterfaceLivro } from '../../models/interfaces';
@@ -20,6 +29,7 @@ export class ListaLivros {
   @Input() campoBusca = new FormControl();
   assinatura: Subscription;
   // livro: InterfaceLivro;
+  mensagemErro = '';
 
   constructor(private livroService: LivroService) {}
 
@@ -33,7 +43,16 @@ export class ListaLivros {
     tap((retornoDaAPI) => console.log(retornoDaAPI)),
     map((resultadoDaAPI) =>
       this.converterResultadoParaInterfaceLivro(resultadoDaAPI)
-    )
+    ),
+    catchError((error) => {
+      console.log(error);
+      return throwError(
+        () =>
+          new Error(
+            (this.mensagemErro = 'Ocorreu um ERRO. Recarregue a PÁGINA')
+          )
+      );
+    })
   );
   //
 
