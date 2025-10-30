@@ -7,6 +7,7 @@ import {
   EMPTY,
   filter,
   map,
+  of,
   Subscription,
   switchMap,
   tap,
@@ -14,7 +15,7 @@ import {
 } from 'rxjs';
 
 import { Livro } from '../../components/livro/livro';
-import { InterfaceLivro } from '../../models/interfaces';
+import { InterfaceLivro, ResultadoBusca } from '../../models/interfaces';
 import { LivroService } from '../../service/livro-service';
 import { GoogleBookVolume } from '../../models/interfaces';
 import { InterfaceConvertidaParaLivro } from '../../models/converter-para-interface-livro';
@@ -36,12 +37,27 @@ export class ListaLivros {
 
   private readonly PAUSA = 500; // milissegundos
 
+  resultadoBusca: ResultadoBusca;
+
+  totalDeLivros$ = this.campoBusca.valueChanges.pipe(
+    debounceTime(this.PAUSA),
+    filter((valorDigitado) => valorDigitado.length >= 3),
+    tap(() => console.log('Fluxo inicial')),
+    switchMap((valorDigitado) => this.livroService.search(valorDigitado)),
+    map((resultado) => (this.resultadoBusca = resultado)),
+    catchError((error) => {
+      console.log(error);
+      return of();
+    })
+  );
+
   livrosEncontrados$ = this.campoBusca.valueChanges.pipe(
     debounceTime(this.PAUSA),
     filter((valorDigitado) => valorDigitado.length >= 3),
     tap(() => console.log('Fluxo inicial')),
     switchMap((valorDigitado) => this.livroService.search(valorDigitado)),
     tap((retornoDaAPI) => console.log(retornoDaAPI)),
+    map((resultado) => resultado.items ?? []),
     map((resultadoDaAPI) =>
       this.converterResultadoParaInterfaceLivro(resultadoDaAPI)
     ),

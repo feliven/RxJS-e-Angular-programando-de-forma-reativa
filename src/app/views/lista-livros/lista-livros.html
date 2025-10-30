@@ -9,8 +9,11 @@
   <p>Busque por assunto, autoria, nome...</p>
   @if(mensagemErro){
   <div class="resultados mensagem-erro">{{mensagemErro}}</div>
+  } @if(totalDeLivros$ | async){
+  <div class="resultados">
+    Foram encontrados {{ resultadoBusca.totalItems }} resultados.
+  </div>
   }
-
   <div
     class="container-card"
     *ngIf="livrosEncontrados$ | async as listaLivros, else telaInicial"

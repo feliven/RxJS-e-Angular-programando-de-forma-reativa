@@ -8,18 +8,20 @@ import { ResultadoBusca, GoogleBookVolume } from '../models/interfaces';
 })
 export class LivroService {
   private readonly enderecoAPI: string =
-    'https://www.googleapis.com/books/v1/volume';
+    'https://www.googleapis.com/books/v1/volumes';
 
   // https://www.googleapis.com/books/v1/volumes?q=search+terms
 
   constructor(private http: HttpClient) {}
 
-  search(searchTerm: string): Observable<GoogleBookVolume[]> {
+  search(searchTerm: string): Observable<ResultadoBusca> {
     const params: HttpParams = new HttpParams().append('q', searchTerm);
-    return this.http.get<ResultadoBusca>(this.enderecoAPI, { params }).pipe(
+    return this.http
+      .get<ResultadoBusca>(this.enderecoAPI, { params })
+      .pipe
       // tap((retornoDaAPI) => console.log(retornoDaAPI)),
-      map((resultado) => resultado.items)
+      // map((resultado) => resultado.items ?? [])
       // tap((resultado) => console.log(resultado))
-    );
+      ();
   }
 }
