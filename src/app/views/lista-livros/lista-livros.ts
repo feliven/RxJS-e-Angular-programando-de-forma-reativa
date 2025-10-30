@@ -39,18 +39,6 @@ export class ListaLivros {
 
   resultadoBusca: ResultadoBusca;
 
-  // totalDeLivros$ = this.campoBusca.valueChanges.pipe(
-  //   debounceTime(this.PAUSA),
-  //   filter((valorDigitado) => valorDigitado.length >= 3),
-  //   tap(() => console.log('Fluxo inicial')),
-  //   switchMap((valorDigitado) => this.livroService.search(valorDigitado)),
-  //   map((resultado) => (this.resultadoBusca = resultado)),
-  //   catchError((error) => {
-  //     console.log(error);
-  //     return of();
-  //   })
-  // );
-
   livrosEncontrados$ = this.campoBusca.valueChanges.pipe(
     debounceTime(this.PAUSA),
     tap(() => console.log('Fluxo inicial')),
@@ -69,19 +57,6 @@ export class ListaLivros {
       return EMPTY;
     })
   );
-  //
-
-  // buscarLivros() {
-  //   this.assinatura = this.livroService.search(this.campoBusca).subscribe({
-  //     next: (resultadoDaAPI) => {
-  //       console.log('Requisição ao servidor'),
-  //         (this.listaLivros =
-  //           this.converterResultadoParaInterfaceLivro(resultadoDaAPI));
-  //     },
-  //     error: (erro) => console.log(erro),
-  //     // complete: () => console.log('Observable completo'),
-  //   });
-  // }
 
   converterResultadoParaInterfaceLivro(
     googleBookVolumes: GoogleBookVolume[]
@@ -90,8 +65,4 @@ export class ListaLivros {
       return new InterfaceConvertidaParaLivro(volume);
     });
   }
-
-  // ngOnDestroy() {
-  //   this.assinatura.unsubscribe();
-  // }
 }

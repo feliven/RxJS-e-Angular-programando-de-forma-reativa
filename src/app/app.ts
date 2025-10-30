@@ -7,7 +7,7 @@ import { Rodape } from './components/rodape/rodape';
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
-  imports: [Cabecalho, Rodape, RouterOutlet],
+  imports: [RouterOutlet, Cabecalho, Rodape],
 })
 export class App {
   title = 'buscante';

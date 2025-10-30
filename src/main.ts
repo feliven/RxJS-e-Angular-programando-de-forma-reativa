@@ -1,14 +1,12 @@
 import { enableProdMode } from '@angular/core';
-import { platformBrowser } from '@angular/platform-browser';
-
-import { environment } from './environments/environment';
-
 import { bootstrapApplication } from '@angular/platform-browser';
 import { importProvidersFrom } from '@angular/core';
-import { App } from './app/app';
 import { AppRoutingModule } from './app/app-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
+
+import { environment } from './environments/environment';
+import { App } from './app/app';
 
 if (environment.production) {
   enableProdMode();
@@ -16,11 +14,7 @@ if (environment.production) {
 
 bootstrapApplication(App, {
   providers: [
-    importProvidersFrom(
-      AppRoutingModule,
-      FormsModule,
-      ReactiveFormsModule,
-      HttpClientModule
-    ),
+    importProvidersFrom(AppRoutingModule, FormsModule, ReactiveFormsModule),
+    provideHttpClient(),
   ],
 }).catch((err) => console.error(err));
