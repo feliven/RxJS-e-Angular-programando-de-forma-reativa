@@ -4,6 +4,7 @@ import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {
   catchError,
   debounceTime,
+  EMPTY,
   filter,
   map,
   Subscription,
@@ -45,13 +46,9 @@ export class ListaLivros {
       this.converterResultadoParaInterfaceLivro(resultadoDaAPI)
     ),
     catchError((error) => {
+      this.mensagemErro = 'Ocorreu um ERRO. Recarregue a PÁGINA';
       console.log(error);
-      return throwError(
-        () =>
-          new Error(
-            (this.mensagemErro = 'Ocorreu um ERRO. Recarregue a PÁGINA')
-          )
-      );
+      return EMPTY;
     })
   );
   //
