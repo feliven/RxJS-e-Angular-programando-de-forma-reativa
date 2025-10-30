@@ -27,7 +27,7 @@ import { InterfaceConvertidaParaLivro } from '../../models/converter-para-interf
   imports: [CommonModule, FormsModule, ReactiveFormsModule, Livro],
 })
 export class ListaLivros {
-  // listaLivros: InterfaceConvertidaParaLivro[] = [];
+  listaLivros: InterfaceConvertidaParaLivro[] = [];
   @Input() campoBusca = new FormControl();
   assinatura: Subscription;
   // livro: InterfaceLivro;
@@ -39,31 +39,33 @@ export class ListaLivros {
 
   resultadoBusca: ResultadoBusca;
 
-  totalDeLivros$ = this.campoBusca.valueChanges.pipe(
-    debounceTime(this.PAUSA),
-    filter((valorDigitado) => valorDigitado.length >= 3),
-    tap(() => console.log('Fluxo inicial')),
-    switchMap((valorDigitado) => this.livroService.search(valorDigitado)),
-    map((resultado) => (this.resultadoBusca = resultado)),
-    catchError((error) => {
-      console.log(error);
-      return of();
-    })
-  );
+  // totalDeLivros$ = this.campoBusca.valueChanges.pipe(
+  //   debounceTime(this.PAUSA),
+  //   filter((valorDigitado) => valorDigitado.length >= 3),
+  //   tap(() => console.log('Fluxo inicial')),
+  //   switchMap((valorDigitado) => this.livroService.search(valorDigitado)),
+  //   map((resultado) => (this.resultadoBusca = resultado)),
+  //   catchError((error) => {
+  //     console.log(error);
+  //     return of();
+  //   })
+  // );
 
   livrosEncontrados$ = this.campoBusca.valueChanges.pipe(
     debounceTime(this.PAUSA),
-    filter((valorDigitado) => valorDigitado.length >= 3),
     tap(() => console.log('Fluxo inicial')),
+    filter((valorDigitado) => valorDigitado.length >= 3),
     switchMap((valorDigitado) => this.livroService.search(valorDigitado)),
     tap((retornoDaAPI) => console.log(retornoDaAPI)),
+    map((resultado) => (this.resultadoBusca = resultado)),
     map((resultado) => resultado.items ?? []),
-    map((resultadoDaAPI) =>
-      this.converterResultadoParaInterfaceLivro(resultadoDaAPI)
+    map(
+      (items) =>
+        (this.listaLivros = this.converterResultadoParaInterfaceLivro(items))
     ),
     catchError((error) => {
-      this.mensagemErro = 'Ocorreu um ERRO. Recarregue a PÁGINA';
       console.log(error);
+      this.mensagemErro = 'Ocorreu um ERRO. Recarregue a PÁGINA';
       return EMPTY;
     })
   );
