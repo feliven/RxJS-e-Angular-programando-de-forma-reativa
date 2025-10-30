@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { map, Subscription, switchMap, tap } from 'rxjs';
+import { filter, map, Subscription, switchMap, tap } from 'rxjs';
 
 import { Livro } from '../../components/livro/livro';
 import { InterfaceLivro } from '../../models/interfaces';
@@ -24,6 +24,7 @@ export class ListaLivros {
   constructor(private livroService: LivroService) {}
 
   livrosEncontrados$ = this.campoBusca.valueChanges.pipe(
+    filter((valorDigitado) => valorDigitado.length >= 3),
     tap(() => console.log('Fluxo inicial')),
     switchMap((valorDigitado) => this.livroService.search(valorDigitado)),
     tap(() => console.log('Requisição ao servidor')),
