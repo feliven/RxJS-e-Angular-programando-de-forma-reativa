@@ -11,11 +11,15 @@
     <div class="info-card">
       <p class="titulo">{{ livro.title }}</p>
       <p class="informacoes">Autoria:</p>
-      <p class="resultado">{{ livro.authors | autoria }}</p>
+      <p class="resultado">
+        {{ livro.authors ? (livro.authors | autoria) : "Indisponível" }}
+      </p>
       <p class="informacoes">Data de publicação:</p>
-      <p class="resultado">{{ livro.publishedDate | date: "dd/MM/yyyy"}}</p>
+      <p class="resultado">
+        {{ (livro.publishedDate | date: "dd/MM/yyyy") ?? "Indisponível" }}
+      </p>
       <p class="informacoes">Editora:</p>
-      <p class="resultado">{{ livro.publisher }}</p>
+      <p class="resultado">{{ livro.publisher ?? "Indisponível" }}</p>
       <button (click)="lerPrevia()" class="detalhes">Ler prévia</button>
     </div>
     <button (click)="fecharModal()" class="botao-fechar">
@@ -23,7 +27,9 @@
     </button>
     <div class="sinopse">
       <h4 class="informacoes">Sinopse</h4>
-      <p class="resultado">{{ livro.description }}</p>
+      <p class="resultado">
+        {{ livro.description ?? "Sinopse indisponível." }}
+      </p>
     </div>
   </div>
   <div class="overlay"></div>
