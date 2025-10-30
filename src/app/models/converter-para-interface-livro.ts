@@ -16,16 +16,19 @@ export class InterfaceConvertidaParaLivro implements InterfaceLivro {
 
     const { volumeInfo } = volume;
 
-    this.title = volumeInfo.title || 'Título não disponível';
-    this.authors = volumeInfo.authors;
-    this.publisher = volumeInfo.publisher;
-    this.publishedDate = this.parseDate(volumeInfo.publishedDate);
-    this.description = volumeInfo.description;
-    this.previewLink = volumeInfo.previewLink;
+    this.title = volumeInfo.title || 'Título indisponível';
+    this.authors = volumeInfo?.authors;
+    this.publisher = volumeInfo?.publisher;
+    this.publishedDate = InterfaceConvertidaParaLivro.parseDateString(
+      volumeInfo.publishedDate
+    );
+    this.description = volumeInfo?.description;
+    this.previewLink = volumeInfo?.previewLink;
     this.thumbnail = volumeInfo.imageLinks?.thumbnail;
   }
 
-  private parseDate(dateString?: string): Date | undefined {
+  // Classe com método privado vira incompatível estruturalmente, por isso foi tornado estático.
+  private static parseDateString(dateString?: string): Date | undefined {
     if (!dateString) return undefined;
 
     try {
