@@ -1,6 +1,6 @@
-import { GoogleBookVolume } from './interfaces';
+import { GoogleBookVolume, InterfaceLivro } from './interfaces';
 
-export class InterfaceConvertidaParaLivro {
+export class InterfaceConvertidaParaLivro implements InterfaceLivro {
   title: string;
   authors?: string[];
   publisher?: string;
@@ -10,14 +10,29 @@ export class InterfaceConvertidaParaLivro {
   thumbnail?: string;
 
   constructor(volume: GoogleBookVolume) {
-    (this.title = volume.volumeInfo?.title),
-      (this.authors = volume.volumeInfo?.authors),
-      (this.publisher = volume.volumeInfo?.publisher),
-      (this.publishedDate = new Date(
-        volume.volumeInfo?.publishedDate + 'T00:00:00'
-      )),
-      (this.description = volume.volumeInfo?.description),
-      (this.previewLink = volume.volumeInfo?.previewLink),
-      (this.thumbnail = volume.volumeInfo?.imageLinks.thumbnail);
+    if (!volume?.volumeInfo) {
+      throw new Error('Invalid volume data provided');
+    }
+
+    const { volumeInfo } = volume;
+
+    this.title = volumeInfo.title || 'Título não disponível';
+    this.authors = volumeInfo.authors;
+    this.publisher = volumeInfo.publisher;
+    this.publishedDate = this.parseDate(volumeInfo.publishedDate);
+    this.description = volumeInfo.description;
+    this.previewLink = volumeInfo.previewLink;
+    this.thumbnail = volumeInfo.imageLinks?.thumbnail;
+  }
+
+  private parseDate(dateString?: string): Date | undefined {
+    if (!dateString) return undefined;
+
+    try {
+      const date = new Date(dateString + 'T00:00:00');
+      return isNaN(date.getTime()) ? undefined : date;
+    } catch {
+      return undefined;
+    }
   }
 }
