@@ -1,4 +1,4 @@
-import { CommonModule, NgIf } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 import { InterfaceConvertidaParaLivro } from '../../models/converter-para-interface-livro';
@@ -10,7 +10,7 @@ const body = document.querySelector('body');
   selector: 'app-modal-livro',
   templateUrl: './modal-livro.html',
   styleUrls: ['./modal-livro.css'],
-  imports: [CommonModule, NgIf, AutoriaPipe],
+  imports: [CommonModule, AutoriaPipe],
 })
 export class ModalLivro {
   constructor() {}

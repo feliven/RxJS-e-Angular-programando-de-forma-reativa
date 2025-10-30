@@ -14,9 +14,11 @@
     <button (click)="onModalChange(true)">Mais detalhes</button>
   </div>
 </div>
-<div *ngIf="modalAberto">
+@if(modalAberto){
+<div>
   <app-modal-livro
     [livro]="livro"
     (mudouModal)="onModalChange($event)"
   ></app-modal-livro>
 </div>
+}
